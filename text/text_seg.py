@@ -1,7 +1,7 @@
 import MeCab
 from collections import Counter
 
-def extractWord(text):
+def extract_word(text):
     '''
     Extract word
     :param text: sentence
@@ -16,16 +16,16 @@ def extractWord(text):
         node = node.next
     return wordList
 
-def count(wordList):
+def count(word_list):
     '''
     count word appear number
     :param wordList:
     :return: map('word':'count')
     '''
-    count = Counter(wordList)
+    count = Counter(word_list)
     return count
 
-def map2Str(map):
+def map2str(map):
     '''
     trans map to str
     :param map:

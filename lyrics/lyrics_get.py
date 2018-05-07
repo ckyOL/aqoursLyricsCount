@@ -10,37 +10,37 @@ headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
 }
 
-def getMusicID(playListUrl):
+def get_musicid(play_list_url):
     '''
     Get music ID
     :param playListUrl:
     :return: musicID list
     '''
     s = requests.session()
-    s = BeautifulSoup(s.get(playListUrl, headers=headers).content, "lxml")
+    s = BeautifulSoup(s.get(play_list_url, headers=headers).content, "lxml")
     main = s.find('ul', {'class': 'f-hide'})
-    musicInfo = main.find_all('a')
+    music_info = main.find_all('a')
 
-    musicList = {}
+    music_list = {}
 
-    for music in musicInfo:
-        musicText = music.text
-        musicID = music['href'].split('=')
-        musicList[musicText] = musicID[1]
+    for music in music_info:
+        music_text = music.text
+        music_id = music['href'].split('=')
+        music_list[music_text] = music_id[1]
         #print('{} : {}'.format(musicText, musicID[1]))
 
-    return musicList
+    return music_list
 
-def getLyrics(musicID):
+def get_lyrics(music_id):
     '''
     Get lyrics
     :param musicID:
     :return: lyric string
     '''
-    lrcUrl = 'http://music.163.com/api/song/lyric?' + 'id=' + str(musicID) + '&lv=1&kv=1&tv=-1'
-    lyric = requests.get(lrcUrl)
-    jsonObj = lyric.text
-    j = json.loads(jsonObj)
+    lrc_url = 'http://music.163.com/api/song/lyric?' + 'id=' + str(music_id) + '&lv=1&kv=1&tv=-1'
+    lyric = requests.get(lrc_url)
+    json_obj = lyric.text
+    j = json.loads(json_obj)
     lrc = j['lrc']['lyric']
     pat = re.compile(r'\[.*\]')
     lrc = re.sub(pat, "", lrc)
